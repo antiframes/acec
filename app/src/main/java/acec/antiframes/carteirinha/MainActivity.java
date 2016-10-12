@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +23,7 @@ import static android.content.Intent.ACTION_VIEW;
 
 public class MainActivity extends Activity {
     private RecyclerView recyclerView;
+    private FloatingActionButton menuButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         recyclerView = (RecyclerView) findViewById(R.id.news_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        menuButton = (FloatingActionButton) findViewById(R.id.button_menu);
         new GetNewsTask().execute();
         new GetMenuItemsTask().execute();
     }
@@ -38,9 +41,6 @@ public class MainActivity extends Activity {
         startActivity(intent);
     }
 
-    public void update(View v){
-
-    }
 
     public void showMenu(View v){
 
@@ -62,13 +62,8 @@ public class MainActivity extends Activity {
 
         @Override
         protected List<MenuItem> doInBackground(Void... voids) {
-            List<MenuItem> newsList = new ArrayList<>();
-            for (int i=0;i<10;i++){
-                newsList.add(new MenuItem("Cachorro surfista é celebridade na Califórnia",
-                        "http://bompracachorro.blogfolha.uol.com.br/2016/09/23/cao-surfista-de-santos-parafina-disputa-campeonato-na-california/"
-                ));
-            }
-            return newsList;
+
+            return RSSHelper.getNews();
         }
 
         @Override
@@ -89,27 +84,12 @@ public class MainActivity extends Activity {
 
         @Override
         protected List<MenuItem> doInBackground(Void... voids) {
-            List<MenuItem> menuList = new ArrayList<>();
-            menuList.add(new MenuItem("Cadastre-se (Pessoa Física)",
-                    "http://bompracachorro.blogfolha.uol.com.br/2016/09/23/cao-surfista-de-santos-parafina-disputa-campeonato-na-california/"
-            ));
-            menuList.add(new MenuItem("Cadastre-se (Pessoa Jurídica)",
-                    "http://bompracachorro.blogfolha.uol.com.br/2016/09/23/cao-surfista-de-santos-parafina-disputa-campeonato-na-california/"
-            ));
-            menuList.add(new MenuItem("Benefícios",
-                    "http://bompracachorro.blogfolha.uol.com.br/2016/09/23/cao-surfista-de-santos-parafina-disputa-campeonato-na-california/"
-            ));
-            menuList.add(new MenuItem("Site da ACEC",
-                    "http://bompracachorro.blogfolha.uol.com.br/2016/09/23/cao-surfista-de-santos-parafina-disputa-campeonato-na-california/"
-            ));
-            menuList.add(new MenuItem("Ajuda",
-                    "http://bompracachorro.blogfolha.uol.com.br/2016/09/23/cao-surfista-de-santos-parafina-disputa-campeonato-na-california/"
-            ));
-            return menuList;
+            return RSSHelper.getMenuItems();
         }
 
         @Override
         protected void onPostExecute(List<MenuItem> items) {
+            menuButton.setVisibility(View.VISIBLE);
             menuItems=items;
         }
     }
