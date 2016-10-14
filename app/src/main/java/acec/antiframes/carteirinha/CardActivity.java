@@ -43,9 +43,9 @@ public class CardActivity extends Activity {
         Animation mAnimation = new TranslateAnimation(
                 TranslateAnimation.ABSOLUTE, 0f,
                 TranslateAnimation.ABSOLUTE, 0f,
-                TranslateAnimation.RELATIVE_TO_PARENT, 0.2f,
+                TranslateAnimation.RELATIVE_TO_PARENT, 0f,
                 TranslateAnimation.RELATIVE_TO_PARENT, -1f);
-        mAnimation.setDuration(5000);
+        mAnimation.setDuration(10000);
         mAnimation.setRepeatCount(-1);
         mAnimation.setRepeatMode(Animation.INFINITE);
         mAnimation.setInterpolator(new LinearInterpolator());

@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -23,15 +24,17 @@ import static android.content.Intent.ACTION_VIEW;
 
 public class MainActivity extends Activity {
     private RecyclerView recyclerView;
-    private FloatingActionButton menuButton;
+    //private FloatingActionButton menuButton;
 
+    private LinearLayout menuButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         recyclerView = (RecyclerView) findViewById(R.id.news_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        menuButton = (FloatingActionButton) findViewById(R.id.button_menu);
+        //menuButton = (FloatingActionButton) findViewById(R.id.button_menu);
+        menuButton = (LinearLayout) findViewById(R.id.button_menu);
         new GetNewsTask().execute();
         new GetMenuItemsTask().execute();
     }
@@ -99,7 +102,7 @@ public class MainActivity extends Activity {
     //region Adapter das Notícias
     private class NewsAdapter extends RecyclerView.Adapter<ViewHolder>{
         private List<MenuItem> newsList;
-        public NewsAdapter(List<MenuItem> newsList){
+        NewsAdapter(List<MenuItem> newsList){
             this.newsList=newsList;
         }
         @Override
@@ -113,8 +116,8 @@ public class MainActivity extends Activity {
         public void onBindViewHolder(ViewHolder holder, int position) {
             MenuItem news = newsList.get(position);
             String urlText = news.getUrl();
-            if (urlText.length()>45)
-                urlText = urlText.substring(0,45)+"...";
+            if (urlText.length()>60)
+                urlText = urlText.substring(0,60)+"...";
             holder.newsUrl.setText(urlText);
             holder.url = news.getUrl();
             holder.newsTitle.setText(news.getTitle());
