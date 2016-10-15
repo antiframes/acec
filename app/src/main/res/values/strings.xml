@@ -4,6 +4,7 @@
     <string name="atualizar">Atualizar</string>
     <string name="menu">Menu</string>
     <string name="novidades">Novidades</string>
+    <string name="balao">Toque no botão abaixo para abrir sua carteirinha ACEC</string>
 
     <string name="card_warning">Carteira válida apenas se estiver no prazo de validade e com a animação do prazo de validade movendo-se sobre a tela. Em caso de dúvida, consulte o emissor da carteira.</string>
 

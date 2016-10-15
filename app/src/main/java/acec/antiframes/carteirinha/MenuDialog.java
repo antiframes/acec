@@ -1,10 +1,12 @@
 package acec.antiframes.carteirinha;
 
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -27,17 +29,24 @@ public class MenuDialog extends DialogFragment {
         super.onCreate(savedInstanceState);
     }
 
-    @Nullable
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_menu, container);
-        getDialog().setTitle("Menu");
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        // Get the layout inflater
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        // Inflate and set the layout for the dialog
+        // Pass null as the parent view because its going in the dialog layout
+
+        View v = inflater.inflate(R.layout.fragment_menu, null);
+        builder.setView(v);
         recyclerView = (RecyclerView) v.findViewById(R.id.menu_items);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         recyclerView.setAdapter(new MenuAdapter(
                 ((MainActivity) getActivity()).getMenuItems()
         ));
-        return v;
+        return builder.create();
     }
 
 

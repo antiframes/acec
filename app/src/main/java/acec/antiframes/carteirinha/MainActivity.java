@@ -3,7 +3,9 @@ package acec.antiframes.carteirinha;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -24,7 +27,7 @@ import static android.content.Intent.ACTION_VIEW;
 
 public class MainActivity extends Activity {
     private RecyclerView recyclerView;
-    //private FloatingActionButton menuButton;
+    private RelativeLayout balloon;
 
     private LinearLayout menuButton;
     @Override
@@ -33,13 +36,24 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         recyclerView = (RecyclerView) findViewById(R.id.news_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        //menuButton = (FloatingActionButton) findViewById(R.id.button_menu);
         menuButton = (LinearLayout) findViewById(R.id.button_menu);
+        balloon = (RelativeLayout) findViewById(R.id.balloon_touch);
+
         new GetNewsTask().execute();
         new GetMenuItemsTask().execute();
+
+
+        SharedPreferences prefs = this.getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
+
+        boolean firstTime=prefs.getBoolean("firstTime",true);
+        if (firstTime){
+            balloon.setVisibility(View.VISIBLE);
+            prefs.edit().putBoolean("firstTime",false).apply();
+        }
     }
 
     public void showCard(View v){
+        balloon.setVisibility(View.GONE);
         Intent intent=new Intent(MainActivity.this,CardActivity.class);
         startActivity(intent);
     }

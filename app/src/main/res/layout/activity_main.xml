@@ -129,14 +129,41 @@
         </android.support.v7.widget.CardView>
     </LinearLayout>
 
-
-    <android.support.design.widget.FloatingActionButton
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
+        android:orientation="vertical"
+        >
+
+        <RelativeLayout
+            android:layout_width="120dp"
+            android:id="@+id/balloon_touch"
+            android:elevation="10dp"
+            android:visibility="gone"
+            android:padding="15dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/balloon"
+            android:layout_marginBottom="5dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:text="@string/balao"
+                android:textSize="12sp"
+                />
+        </RelativeLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
         android:src="@drawable/ic_action_card"
         android:onClick="showCard"
         />
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
