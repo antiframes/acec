@@ -1,15 +1,13 @@
 package acec.antiframes.carteirinha;
 
-import android.content.Context;
 
 import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmResults;
 
 class DatabaseHelper {
 
-    static void saveNews(final MenuItem news){
+    static void saveToDatabase(final MenuItem news){
         Realm.getDefaultInstance().executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -20,6 +18,14 @@ class DatabaseHelper {
 
     static List<MenuItem> getNews(){
         return Realm.getDefaultInstance().where(MenuItem.class)
+                .equalTo("isNews",true)
+                .findAll();
+    }
+
+
+    static List<MenuItem> getMenuItems(){
+        return Realm.getDefaultInstance().where(MenuItem.class)
+                .equalTo("isNews",false)
                 .findAll();
     }
 

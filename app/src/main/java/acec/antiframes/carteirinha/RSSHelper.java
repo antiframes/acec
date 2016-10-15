@@ -17,12 +17,12 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-public class RSSHelper {
+class RSSHelper {
     private static final String TAG = "RSSHELPER";
     private static final String NEWS_URL = "http://www.turismo.gov.br/ultimas-noticias.feed?type=rss";
     private static  final String MENU_URL = "http://acec-cairu.org.br/app/menu.xml";
 
-    public static List<MenuItem> getMenuItems(){
+    static List<MenuItem> getMenuItems(){
         List<MenuItem> menuItems = new ArrayList<>();
         Document xmlDoc = getXMLDocument(MENU_URL);
         if (xmlDoc!=null) {
@@ -40,6 +40,7 @@ public class RSSHelper {
                     itemChilds = curChild.getChildNodes();
                     //informações do item
                     currentMenuItem = new MenuItem();
+                    currentMenuItem.setNews(false);
                     for (int j=0;j<itemChilds.getLength();j++) {
                         curItemChild= itemChilds.item(j);
                         if (curItemChild.getNodeName().equalsIgnoreCase("title"))
@@ -57,7 +58,7 @@ public class RSSHelper {
         return null;
     }
 
-    public static List<MenuItem> getNews(){
+    static List<MenuItem> getNews(){
         List<MenuItem> newsItems = new ArrayList<>();
         Document xmlDoc = getXMLDocument(NEWS_URL);
         if (xmlDoc!=null) {
@@ -75,6 +76,7 @@ public class RSSHelper {
                     currentNewsItem = new MenuItem();
                     for (int j=0;j<itemChilds.getLength();j++) {
                         curItemChild= itemChilds.item(j);
+                        currentNewsItem.setNews(true);
                         if (curItemChild.getNodeName().equalsIgnoreCase("title"))
                             currentNewsItem.setTitle(curItemChild.getTextContent());
                         if (curItemChild.getNodeName().equalsIgnoreCase("link"))

@@ -5,6 +5,7 @@ import io.realm.annotations.PrimaryKey;
 
 public class MenuItem  extends RealmObject{
     private String title;
+    private boolean isNews;
 
     @PrimaryKey
     private String url;
@@ -29,5 +30,13 @@ public class MenuItem  extends RealmObject{
 
     void setUrl(String url) {
         this.url = url;
+    }
+
+    public boolean isNews() {
+        return isNews;
+    }
+
+    void setNews(boolean news) {
+        isNews = news;
     }
 }

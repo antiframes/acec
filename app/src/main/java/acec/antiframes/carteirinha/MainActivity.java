@@ -9,8 +9,6 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
@@ -42,15 +39,24 @@ public class MainActivity extends Activity {
         menuButton = (LinearLayout) findViewById(R.id.button_menu);
         balloon = (RelativeLayout) findViewById(R.id.balloon_touch);
 
+        //pegar notícias
         List<MenuItem> newsFromDatabase=DatabaseHelper.getNews();
         if (newsFromDatabase.size()==0)
             new GetNewsTask().execute();
         else {
+            menuButton.setVisibility(View.VISIBLE);
             recyclerView.setAdapter(
                     new NewsAdapter(DatabaseHelper.getNews())
             );
         }
-        new GetMenuItemsTask().execute();
+
+        //pegar ítens do menu
+        List<MenuItem> itemsFromDatabase=DatabaseHelper.getMenuItems();
+        if (itemsFromDatabase.size()==0)
+            new GetMenuItemsTask().execute();
+        else {
+            menuItems=itemsFromDatabase;
+        }
 
 
         SharedPreferences prefs = this.getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
@@ -95,7 +101,7 @@ public class MainActivity extends Activity {
         @Override
         protected void onPostExecute(List<MenuItem> newses) {
             for (MenuItem news:newses)
-                DatabaseHelper.saveNews(news);
+                DatabaseHelper.saveToDatabase(news);
             recyclerView.setAdapter(new NewsAdapter(newses));
         }
     }
@@ -118,6 +124,9 @@ public class MainActivity extends Activity {
         @Override
         protected void onPostExecute(List<MenuItem> items) {
             menuButton.setVisibility(View.VISIBLE);
+            for (MenuItem item:items)
+                DatabaseHelper.saveToDatabase(item);
+
             menuItems=items;
         }
     }
