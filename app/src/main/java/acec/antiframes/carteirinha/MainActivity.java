@@ -23,6 +23,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.Realm;
+
 import static android.content.Intent.ACTION_VIEW;
 
 public class MainActivity extends Activity {
@@ -33,13 +35,21 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Realm.init(getApplicationContext());
         setContentView(R.layout.activity_main);
         recyclerView = (RecyclerView) findViewById(R.id.news_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         menuButton = (LinearLayout) findViewById(R.id.button_menu);
         balloon = (RelativeLayout) findViewById(R.id.balloon_touch);
 
-        new GetNewsTask().execute();
+        List<MenuItem> newsFromDatabase=DatabaseHelper.getNews();
+        if (newsFromDatabase.size()==0)
+            new GetNewsTask().execute();
+        else {
+            recyclerView.setAdapter(
+                    new NewsAdapter(DatabaseHelper.getNews())
+            );
+        }
         new GetMenuItemsTask().execute();
 
 
@@ -79,12 +89,13 @@ public class MainActivity extends Activity {
 
         @Override
         protected List<MenuItem> doInBackground(Void... voids) {
-
             return RSSHelper.getNews();
         }
 
         @Override
         protected void onPostExecute(List<MenuItem> newses) {
+            for (MenuItem news:newses)
+                DatabaseHelper.saveNews(news);
             recyclerView.setAdapter(new NewsAdapter(newses));
         }
     }

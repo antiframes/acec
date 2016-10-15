@@ -1,7 +1,12 @@
 package acec.antiframes.carteirinha;
 
-public class MenuItem {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
+public class MenuItem  extends RealmObject{
     private String title;
+
+    @PrimaryKey
     private String url;
 
     public MenuItem(){}
@@ -14,7 +19,7 @@ public class MenuItem {
         return title;
     }
 
-    public String getUrl() {
+    String getUrl() {
         return url;
     }
 
@@ -22,7 +27,7 @@ public class MenuItem {
         this.title = title;
     }
 
-    public void setUrl(String url) {
+    void setUrl(String url) {
         this.url = url;
     }
 }
