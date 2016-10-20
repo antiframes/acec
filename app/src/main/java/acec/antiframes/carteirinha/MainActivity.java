@@ -40,7 +40,7 @@ public class MainActivity extends Activity {
         balloon = (RelativeLayout) findViewById(R.id.balloon_touch);
 
         //pegar notícias
-        List<MenuItem> newsFromDatabase=DatabaseHelper.getNews();
+        List<NewsItem> newsFromDatabase=DatabaseHelper.getNews();
         if (newsFromDatabase.size()==0)
             new GetNewsTask().execute();
         else {
@@ -91,16 +91,16 @@ public class MainActivity extends Activity {
     }
 
     //pegar notícias
-    private class GetNewsTask extends AsyncTask<Void,Void,List<MenuItem>>{
+    private class GetNewsTask extends AsyncTask<Void,Void,List<NewsItem>>{
 
         @Override
-        protected List<MenuItem> doInBackground(Void... voids) {
+        protected List<NewsItem> doInBackground(Void... voids) {
             return RSSHelper.getNews();
         }
 
         @Override
-        protected void onPostExecute(List<MenuItem> newses) {
-            for (MenuItem news:newses)
+        protected void onPostExecute(List<NewsItem> newses) {
+            for (NewsItem news:newses)
                 DatabaseHelper.saveToDatabase(news);
             recyclerView.setAdapter(new NewsAdapter(newses));
         }
@@ -135,8 +135,8 @@ public class MainActivity extends Activity {
 
     //region Adapter das Notícias
     private class NewsAdapter extends RecyclerView.Adapter<ViewHolder>{
-        private List<MenuItem> newsList;
-        NewsAdapter(List<MenuItem> newsList){
+        private List<NewsItem> newsList;
+        NewsAdapter(List<NewsItem> newsList){
             this.newsList=newsList;
         }
         @Override
@@ -148,11 +148,7 @@ public class MainActivity extends Activity {
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-            MenuItem news = newsList.get(position);
-            String urlText = news.getUrl();
-            if (urlText.length()>60)
-                urlText = urlText.substring(0,60)+"...";
-            holder.newsUrl.setText(urlText);
+            NewsItem news = newsList.get(position);
             holder.url = news.getUrl();
             holder.newsTitle.setText(news.getTitle());
 
@@ -166,12 +162,10 @@ public class MainActivity extends Activity {
 
     private class ViewHolder extends RecyclerView.ViewHolder{
         TextView newsTitle;
-        TextView newsUrl;
         String url;
         ViewHolder(View itemView) {
             super(itemView);
             newsTitle = (TextView) itemView.findViewById(R.id.news_title);
-            newsUrl = (TextView) itemView.findViewById(R.id.news_url);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

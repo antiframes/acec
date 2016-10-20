@@ -4,18 +4,18 @@ public class User {
     private String name;
     private String cpf;
     private String cnpj;
-    private String userType;
+    private String occupation;
     private String dueDate;
     private String company;
     private String picUrl;
 
     public User(){}
 
-    public User(String name, String cpf, String cnpj, String userType, String dueDate, String company,String picUrl) {
+    public User(String name, String cpf, String cnpj, String occupation, String dueDate, String company, String picUrl) {
         this.name = name;
         this.cpf = cpf;
         this.cnpj = cnpj;
-        this.userType = userType;
+        this.occupation = occupation;
         this.dueDate = dueDate;
         this.company = company;
         this.picUrl = picUrl;
@@ -61,12 +61,12 @@ public class User {
         this.cnpj = cnpj;
     }
 
-    public String getUserType() {
-        return userType;
+    public String getOccupation() {
+        return occupation;
     }
 
-    public void setUserType(String userType) {
-        this.userType = userType;
+    public void setOccupation(String occupation) {
+        this.occupation = occupation;
     }
 
     public String getDueDate() {

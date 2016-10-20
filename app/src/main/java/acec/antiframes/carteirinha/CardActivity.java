@@ -2,7 +2,7 @@ package acec.antiframes.carteirinha;
 
 import android.app.Activity;
 import android.graphics.Typeface;
-import android.support.v7.app.AppCompatActivity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -50,8 +50,26 @@ public class CardActivity extends Activity {
         mAnimation.setRepeatMode(Animation.INFINITE);
         mAnimation.setInterpolator(new LinearInterpolator());
         watermark.setAnimation(mAnimation);
+        sendRequest();
+        //getUser();
+    }
 
-        getUser();
+    private void sendRequest(){
+        String cpf = "90317769049";
+        String pass = "000000";
+        new GetUserTask().execute(cpf,pass);
+    }
+
+    private class GetUserTask extends AsyncTask<String,Void,User>{
+
+        @Override
+        protected User doInBackground(String... strings) {
+            return RSSHelper.getUserFromWebservice(strings[0],strings[1],CardActivity.this);
+        }
+    }
+
+    public void receiveUser(User user){
+        fillData(user);
     }
 
     private void getUser(){
@@ -71,7 +89,7 @@ public class CardActivity extends Activity {
         userCPF.setText(cpfMsg);
         String cnpjMsg = "CNPJ: "+user.getCnpj();
         userCNPJ.setText(cnpjMsg);
-        userType.setText(user.getUserType());
+        userType.setText(user.getOccupation());
 
         String dateMsg = "Validade: "+user.getDueDate();
         String dateMsg2 = "VALIDADE: \n"+user.getDueDate();
