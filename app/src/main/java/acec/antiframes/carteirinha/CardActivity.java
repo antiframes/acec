@@ -1,17 +1,28 @@
 package acec.antiframes.carteirinha;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+
+import static android.content.ContentValues.TAG;
 
 public class CardActivity extends Activity {
     private TextView userName;
@@ -23,12 +34,16 @@ public class CardActivity extends Activity {
     private ImageView userPicture;
     private TextView watermark;
 
+    private RelativeLayout mainLayout;
+    private SharedPreferences prefs;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card);
 
+        mainLayout = (RelativeLayout) findViewById(R.id.card_main_layout);
         //campos de texto
         userName = (TextView) findViewById(R.id.user_name);
         userCPF = (TextView) findViewById(R.id.user_cpf);
@@ -50,13 +65,76 @@ public class CardActivity extends Activity {
         mAnimation.setRepeatMode(Animation.INFINITE);
         mAnimation.setInterpolator(new LinearInterpolator());
         watermark.setAnimation(mAnimation);
-        sendRequest();
-        //getUser();
+
+        prefs = this.getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
+
+        User user = getUser();
+        if (user==null)
+            getCredentials();
+        else {
+            mainLayout.setVisibility(View.VISIBLE);
+            fillData(user);
+        }
     }
 
-    private void sendRequest(){
-        String cpf = "90317769049";
-        String pass = "000000";
+    private User getUser(){
+        User user = new User();
+
+        String userName = prefs.getString("userName",null);
+        String userCpf = prefs.getString("userCPF",null);
+        String userOccupation = prefs.getString("userOccupation",null);
+        String userCnpj = prefs.getString("userCNPJ",null);
+        String userCompany = prefs.getString("userCompany",null);
+        String userDueDate = prefs.getString("userDueDate",null);
+        String userPicUrl = prefs.getString("userPicUrl",null);
+
+        if (userName==null
+                || userCpf==null
+                || userPicUrl==null
+                || userOccupation==null
+                || userCnpj==null
+                || userCompany==null
+                || userCompany==null
+                || userDueDate==null
+                )
+            return null;
+
+        user.setName(userName);
+        user.setCpf(userCpf);
+        user.setOccupation(userOccupation);
+        user.setCnpj(userCnpj);
+        user.setCompany(userCompany);
+        user.setDueDate(userDueDate);
+        user.setPicUrl(userPicUrl);
+        
+        
+
+        return user;
+    }
+
+    private void getCredentials(){
+        String cpf=prefs.getString("cpf","");
+        String password=prefs.getString("pass","");
+
+        if ((cpf.length()>0) && (password.length()>0))
+            sendRequest(cpf,password);
+        else
+            showDialog();
+    }
+
+    private void showDialog(){
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        // Create and show the dialog.
+        LoginDialog newFragment = new LoginDialog();
+        newFragment.show(ft, "dialog");
+    }
+    public void sendRequest(String cpf,String pass){
         new GetUserTask().execute(cpf,pass);
     }
 
@@ -69,18 +147,9 @@ public class CardActivity extends Activity {
     }
 
     public void receiveUser(User user){
+        mainLayout.setVisibility(View.VISIBLE);
         fillData(user);
-    }
-
-    private void getUser(){
-        User user = new User("Antônio Augusto Liberato",
-                "000.000.000-00",
-                "000.000.000/0000-00",
-                "Sócio",
-                "01/01/2020",
-                "Satélite Online",
-                "http://www.tribunapr.com.br/wp-content/uploads/sites/1/2013/06/12-06-13_gugu.jpg");
-        fillData(user);
+        saveUser(user);
     }
 
     private void fillData(User user){
@@ -97,8 +166,35 @@ public class CardActivity extends Activity {
         userCompany.setText(user.getCompany());
         watermark.setText(dateMsg2);
 
-        Picasso.with(getApplicationContext()).load(user.getPicUrl()).into(userPicture);
+        //Picasso.with(getApplicationContext()).load(user.getPicUrl()).into(userPicture);
+        Picasso.with(getApplicationContext()).load(user.getPicUrl()).into(new Target() {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                userPicture.setImageBitmap(bitmap);
+                Utils.saveAvatar(CardActivity.this,bitmap);
+            }
 
+            @Override
+            public void onBitmapFailed(Drawable errorDrawable) {
+                userPicture.setImageBitmap(Utils.getAvatar(CardActivity.this));
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+            }
+        });
+
+    }
+
+    private void saveUser(User user){
+        prefs.edit().putString("userName",user.getName()).apply();
+        prefs.edit().putString("userCPF",user.getCpf()).apply();
+        prefs.edit().putString("userCNPJ",user.getCnpj()).apply();
+        prefs.edit().putString("userCompany",user.getCompany()).apply();
+        prefs.edit().putString("userOccupation",user.getOccupation()).apply();
+        prefs.edit().putString("userDueDate",user.getDueDate()).apply();
+        prefs.edit().putString("userPicUrl",user.getPicUrl()).apply();
     }
 
     public void goBack(View v){

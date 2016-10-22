@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/entrar"
+        android:textSize="40sp"
+        android:textColor="@color/colorPrimary"
+        />
+
+    <EditText
+        android:id="@+id/field_cpf"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/cpf"
+        android:inputType="numberDecimal"
+        />
+    <EditText
+        android:id="@+id/field_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/senha"
+        android:inputType="textPassword"
+        />
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:src="@drawable/ic_ok"
+        android:id="@+id/button_ok"
+        />
+
+</LinearLayout>
