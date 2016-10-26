@@ -8,6 +8,7 @@
     <string name="entrar">Entrar</string>
     <string name="cpf">CPF</string>
     <string name="senha">Senha</string>
+    <string name="sem_carteira">Nenhuma carteira registrada</string>
 
     <string name="card_warning">Carteira válida apenas se estiver no prazo de validade e com a animação do prazo de validade movendo-se sobre a tela. Em caso de dúvida, consulte o emissor da carteira.</string>
 

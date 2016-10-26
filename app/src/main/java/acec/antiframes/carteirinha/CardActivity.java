@@ -8,6 +8,8 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,8 +18,10 @@ import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -33,9 +37,11 @@ public class CardActivity extends Activity {
     private TextView userCompany;
     private ImageView userPicture;
     private TextView watermark;
+    private LinearLayout noCardView;
 
     private RelativeLayout mainLayout;
     private SharedPreferences prefs;
+
 
 
     @Override
@@ -52,6 +58,7 @@ public class CardActivity extends Activity {
         userDueDate = (TextView) findViewById(R.id.user_dueDate);
         userCompany = (TextView) findViewById(R.id.user_company);
         userPicture = (ImageView) findViewById(R.id.user_picture);
+        noCardView = (LinearLayout) findViewById(R.id.no_card_view);
         watermark = (TextView) findViewById(R.id.watermark);
         Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/BebasNeue.otf");
         watermark.setTypeface(myTypeface);
@@ -72,6 +79,7 @@ public class CardActivity extends Activity {
         if (user==null)
             getCredentials();
         else {
+            noCardView.setVisibility(View.GONE);
             mainLayout.setVisibility(View.VISIBLE);
             fillData(user);
         }
@@ -87,6 +95,16 @@ public class CardActivity extends Activity {
         String userCompany = prefs.getString("userCompany",null);
         String userDueDate = prefs.getString("userDueDate",null);
         String userPicUrl = prefs.getString("userPicUrl",null);
+
+        try {
+            String foo = Utils.encryptString(userName);
+            String bar = Utils.decodeString(foo);
+
+            Log.d(TAG, "getUser: " + foo + " " + bar);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
 
         if (userName==null
                 || userCpf==null
@@ -112,12 +130,24 @@ public class CardActivity extends Activity {
         return user;
     }
 
+    public void update(View v){
+        getCredentials();
+    }
+
     private void getCredentials(){
         String cpf=prefs.getString("cpf","");
         String password=prefs.getString("pass","");
 
-        if ((cpf.length()>0) && (password.length()>0))
-            sendRequest(cpf,password);
+        if ((cpf.length()>0) && (password.length()>0)) {
+
+            try {
+                String dCpf = Utils.decodeString(cpf);
+                String dPass = Utils.decodeString(password);
+                sendRequest(dCpf, dPass);
+            }catch (Exception e){
+                showDialog();
+            }
+        }
         else
             showDialog();
     }
@@ -135,7 +165,14 @@ public class CardActivity extends Activity {
         newFragment.show(ft, "dialog");
     }
     public void sendRequest(String cpf,String pass){
-        new GetUserTask().execute(cpf,pass);
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting())
+            new GetUserTask().execute(cpf,pass);
+        else{
+            Toast.makeText(this,"Sem conexão",Toast.LENGTH_SHORT).show();
+        }
     }
 
     private class GetUserTask extends AsyncTask<String,Void,User>{
@@ -147,7 +184,14 @@ public class CardActivity extends Activity {
     }
 
     public void receiveUser(User user){
+        if (user==null){
+            Toast.makeText(this,"Falha ao buscar carteirinha",Toast.LENGTH_SHORT).show();
+            showDialog();
+            return;
+        }
+        noCardView.setVisibility(View.GONE);
         mainLayout.setVisibility(View.VISIBLE);
+
         fillData(user);
         saveUser(user);
     }

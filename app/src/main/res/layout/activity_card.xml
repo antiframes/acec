@@ -39,6 +39,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
+                android:onClick="update"
                 android:gravity="center_vertical"
                 >
 
@@ -57,6 +58,27 @@
             </LinearLayout>
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:id="@+id/no_card_view"
+        android:orientation="vertical"
+        android:layout_below="@id/toolbar">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_card"
+            android:tint="@color/colorPrimaryDark"
+            />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/sem_carteira"
+        />
+    </LinearLayout>
     <RelativeLayout
         android:layout_below="@id/toolbar"
         android:layout_width="match_parent"

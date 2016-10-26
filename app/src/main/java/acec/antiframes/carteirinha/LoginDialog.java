@@ -44,11 +44,19 @@ public class LoginDialog extends DialogFragment {
                 ((CardActivity) getActivity()).sendRequest(cpf,pass);
                 LoginDialog.this.dismiss();
 
-                SharedPreferences prefs = getActivity().getSharedPreferences(getActivity().getPackageName(), Context.MODE_PRIVATE);
-                prefs.edit().putString("cpf",cpf).apply();
-                prefs.edit().putString("pass",pass).apply();
+                String eCpf,ePass;
+                try {
+                    eCpf = Utils.encryptString(cpf);
+                    ePass = Utils.encryptString(pass);
+                }
+                catch (Exception e){
+                    return;
+                }
 
-                // TODO: 22/10/16 CRIPTOGRAFAR DADOS
+                SharedPreferences prefs = getActivity().getSharedPreferences(getActivity().getPackageName(), Context.MODE_PRIVATE);
+                prefs.edit().putString("cpf",eCpf).apply();
+                prefs.edit().putString("pass",ePass).apply();
+
             }
         });
 

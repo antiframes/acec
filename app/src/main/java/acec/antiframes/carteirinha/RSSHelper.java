@@ -201,6 +201,11 @@ class RSSHelper {
 
         }
 
+        if (!user.isValid())
+            activity.get().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {activity.get().receiveUser(null);}
+            });
 
         activity.get().runOnUiThread(new Runnable() {
             @Override

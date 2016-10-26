@@ -76,4 +76,11 @@ public class User {
     public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
     }
+
+    public boolean isValid(){
+        return (name!=null &&
+                cpf!=null &&
+                dueDate!=null &&
+                picUrl!=null);
+    }
 }
