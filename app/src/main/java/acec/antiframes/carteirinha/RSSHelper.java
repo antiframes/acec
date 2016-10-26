@@ -22,6 +22,7 @@ import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -91,8 +92,10 @@ class RSSHelper {
                         if (curItemChild.getNodeName().equalsIgnoreCase("link"))
                             currentNewsItem.setUrl(curItemChild.getTextContent());
                     }
-                    if (currentNewsItem.getUrl()!=null)
+                    if (currentNewsItem.getUrl()!=null) {
+                        currentNewsItem.setTimestamp(Calendar.getInstance().getTimeInMillis());
                         newsItems.add(currentNewsItem);
+                    }
 
                 }
             }
@@ -168,9 +171,6 @@ class RSSHelper {
         NodeList items = document.getChildNodes().item(1).getChildNodes();
 
         Node curChild;
-        Node curItemChild;
-        NodeList itemChilds;
-        NewsItem currentNewsItem;
         final User user=new User();
 
 
