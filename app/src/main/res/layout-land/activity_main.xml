@@ -95,17 +95,31 @@
         android:orientation="vertical"
         android:layout_height="match_parent">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_globe"
+                android:tint="@color/colorPrimary"
+                />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/novidades"
             android:textColor="@color/colorPrimary"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:textSize="18sp"
             />
+        </LinearLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -113,13 +127,15 @@
             android:layout_marginStart="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginEnd="10dp"
-            android:background="@color/colorDivider"/>
+            android:background="@color/colorPrimary"/>
 
 
         <android.support.v7.widget.RecyclerView
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/news_list"/>

@@ -6,7 +6,7 @@ import java.util.List;
 import io.realm.Realm;
 
 class DatabaseHelper {
-    private static final int NEWS_LIMIT = 3;
+    private static final int NEWS_LIMIT = 50;
 
     static void saveToDatabase(final MenuItem item){
         Realm.getDefaultInstance().executeTransaction(new Realm.Transaction() {

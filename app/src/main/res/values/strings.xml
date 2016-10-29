@@ -3,7 +3,7 @@
     <string name="mostrar_carteirinha">MOSTRAR CARTEIRINHA</string>
     <string name="atualizar">Atualizar</string>
     <string name="menu">Menu</string>
-    <string name="novidades">Novidades</string>
+    <string name="novidades">Novidades na rede</string>
     <string name="balao">Toque no botão abaixo para abrir sua carteirinha ACEC</string>
     <string name="entrar">Entrar</string>
     <string name="cpf">CPF</string>
@@ -11,5 +11,8 @@
     <string name="sem_carteira">Nenhuma carteira registrada</string>
 
     <string name="card_warning">Carteira válida apenas se estiver no prazo de validade e com a animação do prazo de validade movendo-se sobre a tela. Em caso de dúvida, consulte o emissor da carteira.</string>
+
+    <string name="bem_vindo">Bem-vindo ao APP ACEC!\nAqui você fica sabendo das últimas novidades da associação e do município e ainda usufrui de diversos benefícios para a sua empresa, proprietários e colaboradores.</string>
+    <string name="login_msg"> Para acessar a carteira virtual e usufruir dos diversos benefícios da ACEC, você precisa estar cadastrado na ACEC e sua empresa precisa ser associada e estar em dia com as mensalidades. </string>
 
 </resources>

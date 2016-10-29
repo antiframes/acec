@@ -39,7 +39,7 @@ public class NotificationService extends Service {
                         DatabaseHelper.clearOldNews();
                         sendNotification(news.get(0).getTitle());
                     }
-                }, 2, 2, TimeUnit.HOURS);
+                }, 10, 10, TimeUnit.MINUTES);
         return START_STICKY;
     }
 

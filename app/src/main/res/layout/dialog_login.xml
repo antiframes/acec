@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/entrar"
-        android:textSize="40sp"
+        android:textSize="20sp"
         android:textColor="@color/colorPrimary"
         />
 
@@ -35,5 +35,14 @@
         android:src="@drawable/ic_ok"
         android:id="@+id/button_ok"
         />
+
+    <TextView
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/login_msg"
+        android:textColor="@color/colorSecondaryText"
+        />
+
 
 </LinearLayout>
