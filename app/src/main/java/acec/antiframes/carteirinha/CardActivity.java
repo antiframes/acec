@@ -112,7 +112,6 @@ public class CardActivity extends Activity {
                 || userOccupation==null
                 || userCnpj==null
                 || userCompany==null
-                || userCompany==null
                 || userDueDate==null
                 )
             return null;
@@ -184,16 +183,17 @@ public class CardActivity extends Activity {
     }
 
     public void receiveUser(User user){
-        if (user==null){
+        if ((user==null)||(user.getCpf()==null)){
             Toast.makeText(this,"Falha ao buscar carteirinha",Toast.LENGTH_SHORT).show();
             showDialog();
-            return;
         }
-        noCardView.setVisibility(View.GONE);
-        mainLayout.setVisibility(View.VISIBLE);
+        else {
+            noCardView.setVisibility(View.GONE);
+            mainLayout.setVisibility(View.VISIBLE);
 
-        fillData(user);
-        saveUser(user);
+            fillData(user);
+            saveUser(user);
+        }
     }
 
     private void fillData(User user){

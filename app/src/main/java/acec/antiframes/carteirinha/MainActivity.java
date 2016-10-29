@@ -39,12 +39,15 @@ public class MainActivity extends Activity {
         menuButton = (LinearLayout) findViewById(R.id.button_menu);
         balloon = (RelativeLayout) findViewById(R.id.balloon_touch);
 
+        //inicia o daemon das notícias
+        startService(new Intent(getApplicationContext(),NotificationService.class));
+
         //pegar notícias
         List<NewsItem> newsFromDatabase=DatabaseHelper.getNews();
         if (newsFromDatabase.size()==0)
             new GetNewsTask().execute();
         else {
-            menuButton.setVisibility(View.VISIBLE);
+
             recyclerView.setAdapter(
                     new NewsAdapter(DatabaseHelper.getNews())
             );
@@ -56,6 +59,7 @@ public class MainActivity extends Activity {
             new GetMenuItemsTask().execute();
         else {
             menuItems=itemsFromDatabase;
+            menuButton.setVisibility(View.VISIBLE);
         }
 
 
