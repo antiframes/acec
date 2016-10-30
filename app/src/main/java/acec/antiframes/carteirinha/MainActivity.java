@@ -27,6 +27,7 @@ import static android.content.Intent.ACTION_VIEW;
 public class MainActivity extends Activity {
     private RecyclerView recyclerView;
     private RelativeLayout balloon;
+    private TextView buttonHint;
 
     private LinearLayout menuButton;
     @Override
@@ -38,6 +39,7 @@ public class MainActivity extends Activity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         menuButton = (LinearLayout) findViewById(R.id.button_menu);
         balloon = (RelativeLayout) findViewById(R.id.balloon_touch);
+        buttonHint=(TextView) findViewById(R.id.touch_hint);
 
         //inicia o daemon das notícias
         startService(new Intent(getApplicationContext(),NotificationService.class));
@@ -68,6 +70,7 @@ public class MainActivity extends Activity {
         boolean firstTime=prefs.getBoolean("firstTime",true);
         if (firstTime){
             balloon.setVisibility(View.VISIBLE);
+            buttonHint.setVisibility(View.VISIBLE);
             prefs.edit().putBoolean("firstTime",false).apply();
         }
     }
@@ -92,6 +95,11 @@ public class MainActivity extends Activity {
         MenuDialog newFragment = new MenuDialog();
         newFragment.show(ft, "dialog");
 
+    }
+
+    public void hideHint(View v){
+        balloon.setVisibility(View.GONE);
+        buttonHint.setVisibility(View.GONE);
     }
 
     //pegar notícias

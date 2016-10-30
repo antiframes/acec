@@ -130,7 +130,7 @@ public class CardActivity extends Activity {
     }
 
     public void update(View v){
-        getCredentials();
+        showDialog();
     }
 
     private void getCredentials(){
@@ -184,7 +184,7 @@ public class CardActivity extends Activity {
 
     public void receiveUser(User user){
         if ((user==null)||(user.getCpf()==null)){
-            Toast.makeText(this,"Falha ao buscar carteirinha",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Problemas de conta! Consulte o administrador da sua entidade.",Toast.LENGTH_SHORT).show();
             showDialog();
         }
         else {
