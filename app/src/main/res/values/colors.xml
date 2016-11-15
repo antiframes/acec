@@ -5,7 +5,7 @@
     <color name="colorAccent">#448AFF</color>
     <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondaryText">#757575</color>
-    <color name="colorFloatingText">#4fff5252</color>
+    <color name="colorFloatingText">#8c5277ff</color>
     <color name="colorDivider">#bbbbbb</color>
 
     <color name="darkBackground">#e1000000</color>

@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">ACEC</string>
     <string name="mostrar_carteirinha">MOSTRAR CARTEIRINHA</string>
-    <string name="atualizar">Atualizar</string>
+    <string name="atualizar">Baixar nova</string>
     <string name="menu">Menu</string>
-    <string name="novidades">Novidades na rede</string>
+    <string name="novidades">Novidades</string>
     <string name="balao">Toque neste botão para abrir sua carteirinha ACEC</string>
     <string name="entrar">Entrar</string>
     <string name="cpf">CPF</string>
