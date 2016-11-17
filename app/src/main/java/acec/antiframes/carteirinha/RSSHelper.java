@@ -79,7 +79,7 @@ class RSSHelper {
             Node curItemChild;
             NodeList itemChilds;
             NewsItem currentNewsItem;
-            for (int i=0;i<items.getLength();i++) {
+            for (int i=items.getLength()-1;i>=0;i--) {
                 curChild = items.item(i);
                 if (curChild.getNodeName().equalsIgnoreCase("item")){
                     itemChilds = curChild.getChildNodes();

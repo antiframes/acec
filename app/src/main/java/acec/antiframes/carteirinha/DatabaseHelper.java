@@ -4,6 +4,7 @@ package acec.antiframes.carteirinha;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.Sort;
 
 class DatabaseHelper {
     private static final int NEWS_LIMIT = 50;
@@ -34,7 +35,8 @@ class DatabaseHelper {
     }
 
     static List<NewsItem> getNews(){
-        return Realm.getDefaultInstance().where(NewsItem.class).findAllSorted("timestamp");
+        return Realm.getDefaultInstance().where(NewsItem.class).findAll()
+        .sort("timestamp").sort("timestamp", Sort.DESCENDING);
     }
 
 

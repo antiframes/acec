@@ -33,20 +33,21 @@ public class NotificationService extends Service {
                 (new Runnable() {
                     public void run() {
                         List<NewsItem> news = RSSHelper.getNews();
+
                         for (NewsItem newsItem:news){
                             DatabaseHelper.saveToDatabase(newsItem);
                         }
                         DatabaseHelper.clearOldNews();
                         sendNotification(news.get(0).getTitle());
                     }
-                }, 2, 2, TimeUnit.HOURS);
+                }, 2, 2, TimeUnit.MINUTES);
         return START_STICKY;
     }
 
     private void sendNotification(String lastNews){
         NotificationCompat.Builder builder=
                 new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setSmallIcon(R.drawable.ic_notif)
                         .setContentTitle("ACEC - Novidades")
                         .setAutoCancel(true)
                         .setContentText(lastNews);
