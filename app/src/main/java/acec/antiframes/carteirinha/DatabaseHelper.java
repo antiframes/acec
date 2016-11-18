@@ -21,17 +21,20 @@ class DatabaseHelper {
 
     static void saveToDatabase(final NewsItem news){
         //bloqueia a mesma notícia de ser adicionada duas vezes
-        List<NewsItem> newsWithSameURL =
-                Realm.getDefaultInstance().where(NewsItem.class).equalTo("url",news.getUrl()).findAll();
-
         //adiciona se notícia não estiver no banco
-        if (newsWithSameURL.size()==0)
+        if (noNewsForUrl(news))
             Realm.getDefaultInstance().executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
                     realm.copyToRealmOrUpdate(news);
                 }
             });
+    }
+
+    static boolean noNewsForUrl(final  NewsItem news){
+        List<NewsItem> newsWithSameURL =
+                Realm.getDefaultInstance().where(NewsItem.class).equalTo("url",news.getUrl()).findAll();
+        return newsWithSameURL.size()==0;
     }
 
     static List<NewsItem> getNews(){

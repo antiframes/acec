@@ -1,8 +1,10 @@
 package acec.antiframes.carteirinha;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -43,7 +45,14 @@ public class MainActivity extends Activity {
         buttonHint=(TextView) findViewById(R.id.touch_hint);
 
         //inicia o daemon das notícias
-        startService(new Intent(getApplicationContext(),NotificationService.class));
+        //startService(new Intent(getApplicationContext(),NotificationService.class));
+        Intent alarmIntent = new Intent(MainActivity.this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, alarmIntent, 0);
+
+        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        manager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, AlarmManager.INTERVAL_HOUR, AlarmManager.INTERVAL_HOUR, pendingIntent);
+
 
         //pegar notícias
         List<NewsItem> newsFromDatabase=DatabaseHelper.getNews();

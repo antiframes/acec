@@ -38,9 +38,9 @@ public class NotificationService extends Service {
                             DatabaseHelper.saveToDatabase(newsItem);
                         }
                         DatabaseHelper.clearOldNews();
-                        sendNotification(news.get(0).getTitle());
+                        sendNotification(news.get(news.size()-1).getTitle());
                     }
-                }, 2, 2, TimeUnit.MINUTES);
+                }, 60, 60, TimeUnit.MINUTES);
         return START_STICKY;
     }
 
