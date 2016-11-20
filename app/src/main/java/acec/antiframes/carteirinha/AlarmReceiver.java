@@ -10,6 +10,8 @@ import android.support.v4.app.TaskStackBuilder;
 
 import java.util.List;
 
+import io.realm.Realm;
+
 import static android.content.Context.NOTIFICATION_SERVICE;
 
 
@@ -21,6 +23,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                Realm.init(context);
                 List<NewsItem> news = RSSHelper.getNews();
                 if(news==null)
                     return;
