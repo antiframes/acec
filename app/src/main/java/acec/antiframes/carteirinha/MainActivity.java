@@ -38,7 +38,6 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate: starting");
         Realm.init(getApplicationContext());
         setContentView(R.layout.activity_main);
         recyclerView = (RecyclerView) findViewById(R.id.news_list);
@@ -79,7 +78,6 @@ public class MainActivity extends Activity {
         }
 
 
-        Log.d(TAG, "onCreate: getting prefs");
         SharedPreferences prefs = this.getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
 
         boolean firstTime=prefs.getBoolean("firstTime",true);
@@ -89,7 +87,6 @@ public class MainActivity extends Activity {
             prefs.edit().putBoolean("firstTime",false).apply();
         }
 
-        Log.d(TAG, "onCreate: finishing");
     }
 
     public void showCard(View v){
@@ -119,11 +116,6 @@ public class MainActivity extends Activity {
         buttonHint.setVisibility(View.GONE);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d(TAG, "onStart: starting");
-    }
 
     //pegar notícias
     private class GetNewsTask extends AsyncTask<Void,Void,List<NewsItem>>{

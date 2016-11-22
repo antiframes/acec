@@ -1,6 +1,7 @@
 package acec.antiframes.carteirinha;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -178,6 +179,18 @@ class RSSHelper {
             curChild = items.item(i);
             Log.d(TAG, "parseXmlresponse: "+curChild.getNodeName()+" "+curChild.getTextContent());
 
+            if (curChild.getNodeName().equalsIgnoreCase("mensagem")){
+                final String errorMsg = curChild.getTextContent();
+                activity.get().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(activity.get().getApplicationContext()
+                                ,errorMsg,Toast.LENGTH_SHORT).show ();
+                    }
+                });
+                return;
+            }
+
             if (curChild.getNodeName().equalsIgnoreCase("nome"))
                 user.setName(curChild.getTextContent());
 
@@ -201,13 +214,8 @@ class RSSHelper {
 
         }
 
-        if (!user.isValid())
+        if (user.isValid())
             activity.get().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {activity.get().receiveUser(null);}
-            });
-
-        activity.get().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 activity.get().receiveUser(user);
