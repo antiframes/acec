@@ -168,7 +168,7 @@ public class CardActivity extends Activity {
             showDialog();
     }
 
-    private void showDialog(){
+    public void showDialog(){
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         Fragment prev = getFragmentManager().findFragmentByTag("dialog");
         if (prev != null) {

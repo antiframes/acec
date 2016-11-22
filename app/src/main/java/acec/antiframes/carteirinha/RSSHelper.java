@@ -181,14 +181,17 @@ class RSSHelper {
 
             if (curChild.getNodeName().equalsIgnoreCase("mensagem")){
                 final String errorMsg = curChild.getTextContent();
-                activity.get().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(activity.get().getApplicationContext()
-                                ,errorMsg,Toast.LENGTH_SHORT).show ();
-                    }
-                });
-                return;
+                if (!errorMsg.equals("ok")) {
+                    activity.get().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(activity.get().getApplicationContext()
+                                    , errorMsg, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    activity.get().showDialog();
+                    return;
+                }
             }
 
             if (curChild.getNodeName().equalsIgnoreCase("nome"))
