@@ -33,7 +33,15 @@
             android:onClick="goBack"
             android:background="@android:color/transparent"
             />
-        <LinearLayout
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:src="@mipmap/acec_tr"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                />
+
+            <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
@@ -94,14 +102,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"
+        android:visibility="gone"
         android:id="@+id/card_main_layout"
-        android:visibility="invisible"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin">
         <android.support.v7.widget.CardView
             android:id="@+id/card_main"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="160dp"
+            android:layout_centerHorizontal="true"
             android:layout_marginRight="30dp"
             android:layout_marginEnd="30dp"
             android:layout_marginLeft="30dp"
@@ -112,11 +121,12 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@mipmap/cardbg"
                 android:padding="16dp">
                 <ImageView
                     android:layout_gravity="center_vertical"
                     android:layout_width="80dp"
-                    android:layout_height="120dp"
+                    android:layout_height="100dp"
                     android:id="@+id/user_picture"
                     android:scaleType="centerCrop"
                     android:layout_marginRight="16dp"
@@ -135,7 +145,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/user_name"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="18sp"
+                        android:textSize="15sp"
                         />
                     <View
                         android:layout_width="match_parent"
@@ -147,6 +157,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="12sp"
                         android:id="@+id/user_cpf"
                         android:textColor="@color/colorSecondaryText"
                         />
@@ -155,24 +166,28 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/user_type"
+                        android:textSize="12sp"
                         android:textColor="@color/colorSecondaryText"
                         />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/user_company"
+                        android:textSize="12sp"
                         android:textColor="@color/colorSecondaryText"
                         />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/user_cnpj"
+                        android:textSize="12sp"
                         android:textColor="@color/colorSecondaryText"
                         />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/user_dueDate"
+                        android:textSize="12sp"
                         android:textColor="@color/colorSecondaryText"
                         />
                 </LinearLayout>
@@ -188,6 +203,7 @@
             android:layout_below="@id/card_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:text="@string/card_warning"
             android:textSize="12sp"
             android:textColor="@android:color/white"
@@ -207,8 +223,20 @@
         android:textStyle="bold"
         android:layout_alignParentBottom="true"/>
 
-
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="40sp"
+        android:elevation="10dp"
+        android:gravity="center_horizontal"
+        android:textColor="@color/colorFloatingText"
+        android:id="@+id/watermark2"
+        android:fontFamily="monospace"
+        android:textStyle="bold"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        />
 
 </RelativeLayout>
 

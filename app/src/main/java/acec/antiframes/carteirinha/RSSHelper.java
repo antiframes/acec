@@ -30,7 +30,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 class RSSHelper {
     private static final String TAG = "RSSHELPER";
-    private static final String NEWS_URL = "http://www.turismo.gov.br/ultimas-noticias.feed?type=rss";
+    private static final String NEWS_URL = "http://acec-cairu.org.br/app/rss.xml";
     private static  final String MENU_URL = "http://acec-cairu.org.br/app/menu.xml";
     private static final String WEBSVC_URL = "http://acec-cairu.org.br/app/webservice.php";
 
@@ -73,7 +73,7 @@ class RSSHelper {
         List<NewsItem> newsItems = new ArrayList<>();
         Document xmlDoc = getXMLDocument(NEWS_URL);
         if (xmlDoc!=null) {
-            NodeList items = xmlDoc.getChildNodes().item(1).getChildNodes().item(1).getChildNodes();
+            NodeList items = xmlDoc.getChildNodes().item(0).getChildNodes().item(1).getChildNodes();
 
             Node curChild;
             Node curItemChild;

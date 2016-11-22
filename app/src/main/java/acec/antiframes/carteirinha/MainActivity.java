@@ -14,6 +14,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,11 +32,13 @@ public class MainActivity extends Activity {
     private RecyclerView recyclerView;
     private RelativeLayout balloon;
     private TextView buttonHint;
+    private final String TAG = getClass().getSimpleName();
 
     private LinearLayout menuButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate: starting");
         Realm.init(getApplicationContext());
         setContentView(R.layout.activity_main);
         recyclerView = (RecyclerView) findViewById(R.id.news_list);
@@ -54,6 +57,7 @@ public class MainActivity extends Activity {
         manager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, AlarmManager.INTERVAL_HOUR, AlarmManager.INTERVAL_HOUR, pendingIntent);
 
 
+        Log.d(TAG, "onCreate: getting items");
         //pegar notícias
         List<NewsItem> newsFromDatabase=DatabaseHelper.getNews();
         if (newsFromDatabase.size()==0)
@@ -75,6 +79,7 @@ public class MainActivity extends Activity {
         }
 
 
+        Log.d(TAG, "onCreate: getting prefs");
         SharedPreferences prefs = this.getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
 
         boolean firstTime=prefs.getBoolean("firstTime",true);
@@ -83,6 +88,8 @@ public class MainActivity extends Activity {
             buttonHint.setVisibility(View.VISIBLE);
             prefs.edit().putBoolean("firstTime",false).apply();
         }
+
+        Log.d(TAG, "onCreate: finishing");
     }
 
     public void showCard(View v){
@@ -112,6 +119,12 @@ public class MainActivity extends Activity {
         buttonHint.setVisibility(View.GONE);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart: starting");
+    }
+
     //pegar notícias
     private class GetNewsTask extends AsyncTask<Void,Void,List<NewsItem>>{
 
@@ -124,6 +137,8 @@ public class MainActivity extends Activity {
         protected void onPostExecute(List<NewsItem> newses) {
             for (NewsItem news:newses)
                 DatabaseHelper.saveToDatabase(news);
+
+            Log.d(TAG, "onPostExecute: got news");
             recyclerView.setAdapter(new NewsAdapter(newses));
         }
     }
@@ -149,6 +164,7 @@ public class MainActivity extends Activity {
             for (MenuItem item:items)
                 DatabaseHelper.saveToDatabase(item);
 
+            Log.d(TAG, "onPostExecute: got menu items");
             menuItems=items;
         }
     }

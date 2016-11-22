@@ -37,6 +37,7 @@ public class CardActivity extends Activity {
     private TextView userCompany;
     private ImageView userPicture;
     private TextView watermark;
+    private TextView watermark2;
     private LinearLayout noCardView;
 
     private RelativeLayout mainLayout;
@@ -60,8 +61,12 @@ public class CardActivity extends Activity {
         userPicture = (ImageView) findViewById(R.id.user_picture);
         noCardView = (LinearLayout) findViewById(R.id.no_card_view);
         watermark = (TextView) findViewById(R.id.watermark);
+        watermark2 = (TextView) findViewById(R.id.watermark2);
         Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/BebasNeue.otf");
+
         watermark.setTypeface(myTypeface);
+        watermark2.setTypeface(myTypeface);
+
         Animation mAnimation = new TranslateAnimation(
                 TranslateAnimation.ABSOLUTE, 0f,
                 TranslateAnimation.ABSOLUTE, 0f,
@@ -71,7 +76,19 @@ public class CardActivity extends Activity {
         mAnimation.setRepeatCount(-1);
         mAnimation.setRepeatMode(Animation.INFINITE);
         mAnimation.setInterpolator(new LinearInterpolator());
+
+        Animation mAnimationHor = new TranslateAnimation(
+                TranslateAnimation.RELATIVE_TO_PARENT, 0f,
+                TranslateAnimation.RELATIVE_TO_PARENT, -1f,
+                TranslateAnimation.ABSOLUTE, 0f,
+                TranslateAnimation.ABSOLUTE, 0f);
+        mAnimationHor.setDuration(10000);
+        mAnimationHor.setRepeatCount(-1);
+        mAnimationHor.setRepeatMode(Animation.INFINITE);
+        mAnimationHor.setInterpolator(new LinearInterpolator());
+
         watermark.setAnimation(mAnimation);
+        watermark2.setAnimation(mAnimationHor);
 
         prefs = this.getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
 
@@ -208,7 +225,10 @@ public class CardActivity extends Activity {
         String dateMsg2 = "VALIDADE: \n"+user.getDueDate();
         userDueDate.setText(dateMsg);
         userCompany.setText(user.getCompany());
+
         watermark.setText(dateMsg2);
+        watermark2.setText(dateMsg2);
+
 
         //Picasso.with(getApplicationContext()).load(user.getPicUrl()).into(userPicture);
         Picasso.with(getApplicationContext()).load(user.getPicUrl()).into(new Target() {

@@ -5,7 +5,7 @@
     <string name="menu">Menu</string>
     <string name="novidades">Novidades</string>
     <string name="balao">Toque neste botão para abrir sua carteirinha ACEC</string>
-    <string name="entrar">Entrar</string>
+    <string name="entrar">Baixar Carteira</string>
     <string name="cpf">CPF</string>
     <string name="senha">Senha</string>
     <string name="sem_carteira">Nenhuma carteira registrada</string>
