@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.icu.util.Calendar;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -225,6 +226,9 @@ public class CardActivity extends Activity {
         String dateMsg2 = "VALIDADE: \n"+user.getDueDate();
         userDueDate.setText(dateMsg);
         userCompany.setText(user.getCompany());
+
+        String[] numDueDate = user.getDueDate().split("/");
+        // TODO: 23/11/16 pegar data 
 
         watermark.setText(dateMsg2);
         watermark2.setText(dateMsg2);

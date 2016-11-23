@@ -142,36 +142,7 @@
     </LinearLayout>
 
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="16dp"
-        android:orientation="vertical"
-        >
 
-        <TextView
-            android:layout_width="150dp"
-            android:gravity="end"
-            android:visibility="gone"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:id="@+id/touch_hint"
-            android:textColor="@android:color/white"
-            android:text="@string/balao"
-            android:textSize="12sp"
-            />
-
-
-
-        <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:src="@drawable/ic_action_card"
-        android:onClick="showCard"
-        />
-    </LinearLayout>
 
     <RelativeLayout
 
@@ -211,6 +182,37 @@
             android:textColor="@android:color/white"
             />
     </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_width="150dp"
+            android:gravity="end"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/touch_hint"
+            android:textColor="@android:color/white"
+            android:text="@string/balao"
+            android:textSize="12sp"
+            />
+
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:src="@drawable/ic_action_card"
+            android:onClick="showCard"
+            />
+    </LinearLayout>
 
 
 </android.support.design.widget.CoordinatorLayout>

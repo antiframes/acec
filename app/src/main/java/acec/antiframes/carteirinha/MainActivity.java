@@ -127,6 +127,7 @@ public class MainActivity extends Activity {
 
         @Override
         protected void onPostExecute(List<NewsItem> newses) {
+            if (newses==null) return;
             for (NewsItem news:newses)
                 DatabaseHelper.saveToDatabase(news);
 
@@ -153,6 +154,7 @@ public class MainActivity extends Activity {
         @Override
         protected void onPostExecute(List<MenuItem> items) {
             menuButton.setVisibility(View.VISIBLE);
+            if (items==null) return;
             for (MenuItem item:items)
                 DatabaseHelper.saveToDatabase(item);
 

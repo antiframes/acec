@@ -82,6 +82,7 @@ public class MenuDialog extends DialogFragment {
 
         @Override
         public int getItemCount() {
+            if (items==null) return 0;
             return items.size();
         }
     }
