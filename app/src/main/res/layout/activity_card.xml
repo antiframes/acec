@@ -115,18 +115,25 @@
         <android.support.v7.widget.CardView
             android:id="@+id/card_main"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             >
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@mipmap/cardbg"
+                android:scaleType="centerCrop"
+                />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@mipmap/cardbg"
                 android:scaleType="fitCenter"
+                android:gravity="center_vertical"
                 android:padding="16dp">
                 <ImageView
                     android:layout_gravity="center_vertical"
