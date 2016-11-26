@@ -70,9 +70,9 @@
 
 
     <ImageView
+        android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@mipmap/wave"
         android:scaleType="centerCrop"
         android:layout_below="@id/toolbar"
         />
@@ -118,9 +118,9 @@
             android:layout_marginTop="5dp"
             >
             <ImageView
+                android:id="@+id/cardbg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@mipmap/cardbg"
                 android:scaleType="centerCrop"
                 />
 

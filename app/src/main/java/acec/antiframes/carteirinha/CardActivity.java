@@ -51,6 +51,13 @@ public class CardActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card);
 
+        ImageView background = (ImageView) findViewById(R.id.background);
+        ImageView cardBg = (ImageView) findViewById(R.id.cardbg);
+
+        Picasso.with(this).load(R.mipmap.wave).into(background);
+        Picasso.with(this).load(R.mipmap.cardbg).into(cardBg);
+
+
         mainLayout = (RelativeLayout) findViewById(R.id.card_main_layout);
         //campos de texto
         userName = (TextView) findViewById(R.id.user_name);
