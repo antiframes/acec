@@ -8,7 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.icu.util.Calendar;
+import java.util.Calendar;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -54,7 +54,7 @@ public class CardActivity extends Activity {
         ImageView background = (ImageView) findViewById(R.id.background);
         ImageView cardBg = (ImageView) findViewById(R.id.cardbg);
 
-        Picasso.with(this).load(R.mipmap.wave).into(background);
+        //Picasso.with(this).load(R.mipmap.wave).into(background);
         Picasso.with(this).load(R.mipmap.cardbg).into(cardBg);
 
 
@@ -75,15 +75,60 @@ public class CardActivity extends Activity {
         watermark.setTypeface(myTypeface);
         watermark2.setTypeface(myTypeface);
 
-        Animation mAnimation = new TranslateAnimation(
+        final Animation mAnimation = new TranslateAnimation(
                 TranslateAnimation.ABSOLUTE, 0f,
                 TranslateAnimation.ABSOLUTE, 0f,
-                TranslateAnimation.RELATIVE_TO_PARENT, 0f,
-                TranslateAnimation.RELATIVE_TO_PARENT, -1f);
-        mAnimation.setDuration(10000);
-        mAnimation.setRepeatCount(-1);
+                TranslateAnimation.RELATIVE_TO_PARENT, -0.4f,
+                TranslateAnimation.RELATIVE_TO_PARENT, -0.6f);
+        mAnimation.setDuration(5000);
         mAnimation.setRepeatMode(Animation.INFINITE);
         mAnimation.setInterpolator(new LinearInterpolator());
+
+        final Animation mAnimation2 = new TranslateAnimation(
+                TranslateAnimation.ABSOLUTE, 0f,
+                TranslateAnimation.ABSOLUTE, 0f,
+                TranslateAnimation.RELATIVE_TO_PARENT, -0.6f,
+                TranslateAnimation.RELATIVE_TO_PARENT, -0.4f);
+        mAnimation2.setDuration(5000);
+        mAnimation2.setRepeatMode(Animation.INFINITE);
+        mAnimation2.setInterpolator(new LinearInterpolator());
+
+        mAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mAnimation2.start();
+                watermark.setAnimation(mAnimation2);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+        mAnimation2.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mAnimation.start();
+                watermark.setAnimation(mAnimation);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
 
         Animation mAnimationHor = new TranslateAnimation(
                 TranslateAnimation.RELATIVE_TO_PARENT, 0f,
@@ -104,8 +149,6 @@ public class CardActivity extends Activity {
         if (user==null)
             getCredentials();
         else {
-            noCardView.setVisibility(View.GONE);
-            mainLayout.setVisibility(View.VISIBLE);
             fillData(user);
         }
     }
@@ -209,19 +252,25 @@ public class CardActivity extends Activity {
 
     public void receiveUser(User user){
         if ((user==null)||(user.getCpf()==null)){
-            Toast.makeText(this,"Problemas de conta! Consulte o administrador da sua entidade.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Falha ao receber usuário",Toast.LENGTH_SHORT).show();
             showDialog();
         }
-        else {
-            noCardView.setVisibility(View.GONE);
-            mainLayout.setVisibility(View.VISIBLE);
-
+        else
             fillData(user);
-            saveUser(user);
-        }
+
     }
 
     private void fillData(User user){
+
+        if (!cardIsValid(user.getDueDate())){
+            Toast.makeText(this, "Carteira vencida. Por favor, baixe sua carteira atualizada.",Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        noCardView.setVisibility(View.GONE);
+        mainLayout.setVisibility(View.VISIBLE);
+
+
         userName.setText(user.getName());
         String cpfMsg = "CPF: "+user.getCpf();
         userCPF.setText(cpfMsg);
@@ -234,8 +283,7 @@ public class CardActivity extends Activity {
         userDueDate.setText(dateMsg);
         userCompany.setText(user.getCompany());
 
-        String[] numDueDate = user.getDueDate().split("/");
-        // TODO: 23/11/16 pegar data 
+
 
         watermark.setText(dateMsg2);
         watermark2.setText(dateMsg2);
@@ -260,6 +308,21 @@ public class CardActivity extends Activity {
             }
         });
 
+        saveUser(user);
+    }
+
+    private boolean cardIsValid(String dueDate) {
+        String[] numDueDate = dueDate.split("/");
+        int dueDay = Integer.parseInt(numDueDate[0]);
+        int dueMonth = Integer.parseInt(numDueDate[1]);
+        int dueYear = Integer.parseInt(numDueDate[2]);
+
+        Calendar c = Calendar.getInstance();
+        int curDay = c.get(Calendar.DAY_OF_MONTH);
+        int curMonth = c.get(Calendar.MONTH)+1;
+        int curYear = c.get(Calendar.YEAR);
+
+        return curYear <= dueYear && curMonth <= dueMonth && curDay <= dueDay;
     }
 
     private void saveUser(User user){
