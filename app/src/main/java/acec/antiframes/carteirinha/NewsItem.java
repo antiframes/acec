@@ -12,11 +12,7 @@ public class NewsItem extends RealmObject{
     public NewsItem() {
     }
 
-    public NewsItem(String title, long timestamp, String url) {
-        this.title = title;
-        this.timestamp = timestamp;
-        this.url = url;
-    }
+
 
     public String getTitle() {
         return title;
@@ -26,19 +22,16 @@ public class NewsItem extends RealmObject{
         this.title = title;
     }
 
-    public long getTimestamp() {
-        return timestamp;
-    }
 
-    public void setTimestamp(long timestamp) {
+    void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
 
-    public String getUrl() {
+    String getUrl() {
         return url;
     }
 
-    public void setUrl(String url) {
+    void setUrl(String url) {
         this.url = url;
     }
 }

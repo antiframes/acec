@@ -24,9 +24,9 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 
 
-public class Utils {
+class Utils {
 
-    public static void saveAvatar(Context context,Bitmap bitmap){
+    static void saveAvatar(Context context,Bitmap bitmap){
         File imgFile= new File(context.getFilesDir(),"avatar.png");
 
         FileOutputStream out = null;
@@ -46,7 +46,7 @@ public class Utils {
         }
     }
 
-    public static Bitmap getAvatar(Context context){
+    static Bitmap getAvatar(Context context){
         File imgFile= new File(context.getFilesDir(),"avatar.png");
         try {
             return BitmapFactory.decodeStream(new FileInputStream(imgFile));
@@ -56,13 +56,13 @@ public class Utils {
         }
     }
 
-    public static String encryptString(String s) throws NoSuchAlgorithmException, InvalidKeySpecException, UnsupportedEncodingException, InvalidKeyException, NoSuchPaddingException, BadPaddingException, IllegalBlockSizeException {
+    static String encryptString(String s) throws NoSuchAlgorithmException, InvalidKeySpecException, UnsupportedEncodingException, InvalidKeyException, NoSuchPaddingException, BadPaddingException, IllegalBlockSizeException {
         byte[] cleartext = s.getBytes("UTF8");
         byte[] encrypedPwd = Base64.encode(cleartext,Base64.DEFAULT);
         return new String(encrypedPwd);
     }
 
-    public static String decodeString(String s) throws UnsupportedEncodingException {
+    static String decodeString(String s) throws UnsupportedEncodingException {
         byte[] cleartext = s.getBytes("UTF8");
         byte[] encrypedPwdBytes = Base64.decode(cleartext,Base64.DEFAULT);
         return  new String(encrypedPwdBytes);

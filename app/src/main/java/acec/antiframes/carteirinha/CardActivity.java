@@ -51,7 +51,7 @@ public class CardActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card);
 
-        ImageView background = (ImageView) findViewById(R.id.background);
+        //ImageView background = (ImageView) findViewById(R.id.background);
         ImageView cardBg = (ImageView) findViewById(R.id.cardbg);
 
         //Picasso.with(this).load(R.mipmap.wave).into(background);

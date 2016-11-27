@@ -122,7 +122,7 @@ class RSSHelper {
         }
     }
 
-    public static User getUserFromWebservice(String cpf, String pass, final CardActivity activity){
+    static User getUserFromWebservice(String cpf, String pass, final CardActivity activity){
         try {
             HttpClient httpClient = new DefaultHttpClient();
             HttpPost httpPost = new HttpPost(WEBSVC_URL);
@@ -131,7 +131,7 @@ class RSSHelper {
 
 
 
-            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+            List<NameValuePair> nameValuePairs = new ArrayList<>(2);
             nameValuePairs.add(new BasicNameValuePair("cpf", cpf));
             nameValuePairs.add(new BasicNameValuePair("senha", pass));
             nameValuePairs.add(new BasicNameValuePair("versao", "1.1"));
@@ -140,7 +140,7 @@ class RSSHelper {
             httpClient.execute(httpPost, new ResponseHandler<Object>() {
 
                 @Override
-                public Object handleResponse(HttpResponse httpResponse) throws ClientProtocolException, IOException {
+                public Object handleResponse(HttpResponse httpResponse) throws IOException {
                     Log.d(TAG, "handleResponse: "+httpResponse.toString());
                     HttpEntity entity=httpResponse.getEntity();
                     InputStream inputStream = entity.getContent();

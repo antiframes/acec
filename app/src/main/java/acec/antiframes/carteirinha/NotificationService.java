@@ -33,7 +33,7 @@ public class NotificationService extends Service {
                 (new Runnable() {
                     public void run() {
                         List<NewsItem> news = RSSHelper.getNews();
-
+                        if (news==null) return;
                         for (NewsItem newsItem:news){
                             DatabaseHelper.saveToDatabase(newsItem);
                         }

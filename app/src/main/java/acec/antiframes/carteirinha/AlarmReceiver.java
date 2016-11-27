@@ -31,9 +31,6 @@ public class AlarmReceiver extends BroadcastReceiver {
                     DatabaseHelper.saveToDatabase(news.get(i));
                 }
 
-
-                for (NewsItem newsItem:news){
-                }
                 NewsItem lastItem = news.get(news.size()-1);
                 boolean noNewsForUrl = DatabaseHelper.noNewsForUrl(lastItem);
                 if (noNewsForUrl) {

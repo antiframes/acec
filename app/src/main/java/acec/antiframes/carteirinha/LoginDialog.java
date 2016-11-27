@@ -15,7 +15,6 @@ import java.lang.ref.WeakReference;
 
 
 public class LoginDialog extends DialogFragment {
-    private FloatingActionButton fab;
 
     public LoginDialog(){}
 
@@ -32,7 +31,7 @@ public class LoginDialog extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View v= inflater.inflate(R.layout.dialog_login,null);
 
-        fab= (FloatingActionButton) v.findViewById(R.id.button_ok);
+        FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.button_ok);
         final EditText cpfField = (EditText) v.findViewById(R.id.field_cpf);
         final EditText passwordField = (EditText) v.findViewById(R.id.field_password);
 
